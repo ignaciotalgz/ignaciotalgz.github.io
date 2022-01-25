@@ -1,1 +1,3 @@
 # ignaciotalgz.github.io
+En desarrollo...
+La idea es subir mi portfolio pronto
