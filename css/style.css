@@ -151,7 +151,7 @@ nav button {
 
 .works {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
 }
 
@@ -159,6 +159,7 @@ figure img {
     max-height: 200px;
     width: 100%;
     transition: all .23s ease;
+    object-fit: contain;
 }
 
 .work {
@@ -276,7 +277,7 @@ figcaption p {
 }
 
 .unique {
-    grid-column: 1 / span 2;
+    grid-column: 1 / span 3;
 }
 
 .modal {
