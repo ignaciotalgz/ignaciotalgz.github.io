@@ -1,5 +1,5 @@
 const toggleBtn = document.getElementById('navbar-toggler');
-const aboutBtn = document.getElementById('about-button');
+// const aboutBtn = document.getElementById('about-button');
 const worksBtn = document.getElementById('works-button');
 const contactBtn = document.getElementById('contact-button');
 
@@ -14,10 +14,6 @@ toggleBtn.addEventListener('click', function () {
         const element = navLinks[index];
         element.classList.toggle("active");
     }
-});
-
-aboutBtn.addEventListener('click', function () {
-    changeView('about');
 });
 
 worksBtn.addEventListener('click', function () {
@@ -35,7 +31,7 @@ function changeView(viewId) {
     for (const section of sectionArray) {
         if (section == sectionArray.namedItem(viewId)) {
             section.classList.remove('hidden-section');
-        } else { 
+        } else {
             section.classList.add('hidden-section');
         }
     }
@@ -76,6 +72,36 @@ function setActive(idWork) {
                 modal.children[0].children[1].appendChild(p);
             });
             break;
+        case 2:
+            titulo.textContent = "Sistema ERP Empresarial - GRIBA SAS";
+            texto = [
+                "Desde diciembre de 2024 formo parte del equipo técnico de GRIBA SAS, desempeñándome como Desarrollador Full Stack con foco principal en la ingeniería backend de un sistema ERP corporativo altamente distribuido.",
+                "Mis responsabilidades principales abarcan el diseño y la implementación de nuevos módulos y requerimientos de negocio utilizando C# y .NET 6. Para la interfaz de usuario de las soluciones heredadas, implementamos e integramos componentes dinámicos con DevExpress 23.2.",
+                "Actualmente, la empresa se encuentra en un proceso estratégico de modernización tecnológica. Formo parte del equipo encargado de migrar paulatinamente las funcionalidades core del sistema desde su entorno clásico de escritorio hacia una plataforma web unificada, adoptando Blazor como framework principal para construir interfaces SPA potentes, interactivas y directamente integradas al ecosistema .NET.",
+                "A nivel de infraestructura de datos, trabajo en la optimización de la capa de persistencia mediante el análisis riguroso y la reescritura de consultas complejas, vistas y procedimientos almacenados bajo el motor SQL Server, logrando mejoras medibles en el rendimiento general y los tiempos de respuesta de los reportes críticos del sistema.",
+                "Asimismo, participo en la interconexión del ERP con servicios de terceros, encargándome del diseño lógico y consumo de APIs REST de alta disponibilidad, incluyendo integraciones clave con ARCA, Mercado Libre y soluciones de comunicación automatizada como Evolution API."
+            ];
+            texto.forEach(parrafo => {
+                const p = document.createElement('p');
+                p.textContent = parrafo;
+                modal.children[0].children[1].appendChild(p);
+            });
+            break;
+        case 3:
+            titulo.textContent = "Trabajo de Graduación: SGBoeris";
+            texto = [
+                "Para la obtención del título de Ingeniero en Computación, diseñé y documenté de forma exhaustiva un sistema web corporativo (SGBoeris) destinado a la gestión integral de stock, trazabilidad de materia prima y administración de flujos de producción y ventas.",
+                "Siguiendo el estándar ANSI/IEEE 830, lideré el análisis y la especificación de requisitos complementarios del software, modelando un sistema flexible bajo un ciclo de vida de prototipado evolutivo y la metodología de desarrollo en V-Script.",
+                "Diseñé la arquitectura de software estructurada en tres capas independientes: una capa de presentación basada en una aplicación Single Page (SPA) con Angular 19 y TypeScript; una capa de negocio RESTful con un servidor de aplicaciones en .NET 9.0 utilizando C#; y una capa de persistencia de datos implementada bajo el motor relacional MySQL (utilizando transacciones ACID con el motor InnoDB, vistas y stored procedures).",
+                "El modelado arquitectónico completo fue desarrollado bajo el estándar UML a través de PlantUML, confeccionando diagramas de contexto, diagramas de subsistemas detallados, especificaciones textuales y diagramas de actividades para 68 casos de uso, modelado lógico-relacional de datos, diagramas de secuencia e interacciones de componentes en tiempo de ejecución representadas en diagramas de despliegue en la nube sobre instancias EC2 de AWS.",
+                "Adicionalmente, se planificó y estructuró la estrategia de calidad de software mediante la implementación teórica de suites de pruebas automatizadas con el framework xUnit para .NET, cubriendo flujos de testing de unidad e integración (procesos críticos de compras, manufactura, ventas y transiciones dinámicas de estado), validados de forma exitosa junto al cliente final a través de pruebas de aceptación alfa y beta."
+            ];
+            texto.forEach(parrafo => {
+                const p = document.createElement('p');
+                p.textContent = parrafo;
+                modal.children[0].children[1].appendChild(p);
+            });
+            break;
         default:
             break;
     }
@@ -83,7 +109,7 @@ function setActive(idWork) {
 
 }
 
-async function submitHandler(event){
+async function submitHandler(event) {
     event.preventDefault();
     const formulario = new FormData(this);
     const response = await fetch(this.action, {
@@ -94,7 +120,7 @@ async function submitHandler(event){
         }
     });
     console.log(response);
-    if(response.ok){
+    if (response.ok) {
         this.reset();
         alert.innerHTML = "Mensaje enviado, pronto estaré en contacto";
         alert.classList.add('alert-success');
