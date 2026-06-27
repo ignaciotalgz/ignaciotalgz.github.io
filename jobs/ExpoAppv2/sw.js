@@ -4,7 +4,7 @@
 // (con internet, antes de ir al stand), la app y los 6 videos queden disponibles
 // 100% offline durante el evento.
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `expoapp-${CACHE_VERSION}`;
 
 // Shell de la app: si falta alguno de estos archivos, la instalacion debe fallar
@@ -17,6 +17,7 @@ const APP_SHELL = [
   './css/video.css',
   './js/app.js',
   './js/video.js',
+  './js/install-prompt.js',
   './manifest.json',
   './img/AlGz.png',
   './img/settings.svg',

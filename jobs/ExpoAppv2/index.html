@@ -19,6 +19,22 @@
 </head>
 
 <body>
+    <!-- Banner de instalación PWA: se muestra solo si el navegador permite instalar
+         y todavia no esta instalada. La logica vive en js/install-prompt.js -->
+    <div id="install-banner" class="install-banner hide" role="alert">
+        <img src="icons/icon-192.png" alt="" class="install-banner-icon">
+        <p class="install-banner-text">
+            Estás viendo la versión online. Instalá la app para acceder a este
+            contenido también sin conexión.
+        </p>
+        <div class="install-banner-actions">
+            <button id="install-banner-btn" class="install-banner-btn">Instalar</button>
+            <button id="install-banner-close" class="install-banner-close" aria-label="Cerrar">
+                <img src="img/x.svg" alt="">
+            </button>
+        </div>
+    </div>
+
     <div class="container">
         <div class="header">
             <div class="logo">
@@ -67,6 +83,7 @@
     </div>
 </body>
 <script src="js/app.js"></script>
+<script src="js/install-prompt.js"></script>
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
