@@ -7,6 +7,7 @@ export const PROJECTS: Project[] = [
     category: 'production',
     period: $localize`:@@proj.boeris.period:2025 — Actualidad`,
     logo: 'assets/img/logo-boeris.png',
+    coverImage: 'assets/img/covers/sgspm-cover.webp',
     featured: true,
     cardSize: 'lg',
     shortDescription: $localize`:@@proj.boeris.short:Sistema de gestión de stock y manufactura en producción real: Angular 19 SSR, .NET 9 y MySQL.`,
@@ -17,10 +18,14 @@ export const PROJECTS: Project[] = [
       $localize`:@@proj.boeris.full.4:Hoy el sistema está desplegado en producción real: backend en Render, base de datos en Aiven for MySQL y frontend en Vercel, incluyendo automatizaciones como reseteo semanal de datos de demo vía cron job.`
     ],
     stack: [
-      { label: 'Angular 19', icon: 'assets/icons/angular.png' },
-      { label: '.NET 9', icon: 'assets/icons/netcore.svg' },
-      { label: 'MySQL', icon: 'assets/icons/mysql.svg' },
-      { label: 'TypeScript', icon: 'assets/icons/typescript.svg' }
+      { label: 'Angular 19', icon: 'assets/icons/angular-original.svg' },
+      { label: '.NET 9', icon: 'assets/icons/dotnetcore-original.svg' },
+      { label: 'MySQL', icon: 'assets/icons/mysql-original.svg' },
+      { label: 'TypeScript', icon: 'assets/icons/typescript-original.svg' },
+      { label: 'PrimeNG', icon: 'assets/icons/primeng-original.svg' },
+      { label: 'Git', icon: 'assets/icons/git-original.svg' },
+      { label: 'Git', icon: 'assets/icons/git-original.svg' },
+      { label: 'UML', icon: 'assets/icons/unifiedmodelinglanguage-original.svg' }      
     ],
     links: [
       { label: $localize`:@@proj.boeris.link.demo:Ver demo en vivo`, url: 'https://boeris-creaciones-client.vercel.app', external: true },
@@ -29,11 +34,33 @@ export const PROJECTS: Project[] = [
     ]
   },
   {
+    id: 'expo-app-v1',
+    title: $localize`:@@proj.expoappv1.title:Aplicación para Exposiciones v1`,
+    category: 'personal',
+    period: $localize`:@@proj.expoappv1.period:2022`,
+    logo: 'assets/img/entetucumanturismo.png',
+    coverImage: 'assets/img/covers/expo-cover.webp',
+    cardSize: 'sm',
+    shortDescription: $localize`:@@proj.expoappv1.short:Primera versión de la aplicación multimedia para exposiciones, desarrollada sobre motor de videojuegos Unity.`,
+    fullDescription: [
+      $localize`:@@proj.expoappv1.full.1:Solución multimedia para pantallas de exposición, construida originalmente sobre el motor Unity, con navegación interactiva entre contenidos de video.`,
+      $localize`:@@proj.expoappv1.full.2:Sentó las bases funcionales que luego motivaron la reingeniería hacia una arquitectura web más liviana en la versión 2 (PWA).`
+    ],
+    stack: [
+      { label: 'Unity', icon: 'assets/icons/unity-original.svg' },
+      { label: 'C#', icon: 'assets/icons/csharp-original.svg' }
+    ],
+    links: [
+      { label: $localize`:@@proj.expoappv1.link.repo:Ver código`, url: 'TODO_URL_REPO_EXPOAPP_V1', external: true }
+    ]
+  },
+  {
     id: 'expo-app-v2',
     title: $localize`:@@proj.expoapp.title:Aplicación para Exposiciones v2`,
     category: 'personal',
     period: $localize`:@@proj.expoapp.period:En desarrollo`,
-    logo: 'assets/img/logo-expoapp.svg',
+    logo: 'assets/icons/AlGz.svg',
+    coverImage: 'assets/img/covers/expo-cover.webp',
     cardSize: 'md',
     shortDescription: $localize`:@@proj.expoapp.short:Migración de una aplicación multimedia de Unity hacia una PWA moderna y liviana.`,
     fullDescription: [
@@ -42,9 +69,9 @@ export const PROJECTS: Project[] = [
       $localize`:@@proj.expoapp.full.3:Service worker con caché en dos niveles, banner de instalación personalizado interceptando beforeinstallprompt, y fallback específico para iOS Safari.`
     ],
     stack: [
-      { label: 'JavaScript', icon: 'assets/icons/javascript.svg' },
+      { label: 'JavaScript', icon: 'assets/icons/javascript-original.svg' },
       { label: 'PWA', icon: 'assets/icons/pwa.svg' },
-      { label: 'Service Workers', icon: 'assets/icons/sw.svg' }
+      { label: 'Service Workers', icon: 'assets/icons/service-worker.svg' }
     ],
     links: [{ label: $localize`:@@proj.expoapp.link.demo:Ver demo`, url: '/jobs/ExpoAppv2/index.html', external: true }]
   },
@@ -53,14 +80,15 @@ export const PROJECTS: Project[] = [
     title: $localize`:@@proj.envases.title:Sistema de Seguimiento de Envases`,
     category: 'academic',
     period: $localize`:@@proj.envases.period:2023`,
-    logo: 'assets/img/logo-unt.svg',
+    logo: 'assets/img/unt.png',
+    coverImage: 'assets/img/covers/facet-cover.webp',
     cardSize: 'sm',
     shortDescription: $localize`:@@proj.envases.short:Análisis funcional y documentación arquitectónica UML para un sistema logístico real.`,
     fullDescription: [
       $localize`:@@proj.envases.full.1:Diseño del modelo arquitectónico y relevamiento de requerimientos para un sistema logístico de trazabilidad de envases en un entorno comercial real, desde entrevistas con el cliente hasta documentación técnica exhaustiva bajo UML.`,
       $localize`:@@proj.envases.full.2:Diagramas de casos de uso, especificaciones de escenarios, diagramas de secuencia y modelos de entidad-relación.`
     ],
-    stack: [{ label: 'UML', icon: 'assets/icons/uml.svg' }],
+    stack: [{ label: 'UML', icon: 'assets/icons/unifiedmodelinglanguage-original.svg' }],
     links: [{ label: $localize`:@@proj.envases.link.pdf:Ver PDF`, url: 'assets/files/UML_SistemaSegEnv.pdf', external: true }]
   },
   {
@@ -68,14 +96,15 @@ export const PROJECTS: Project[] = [
     title: $localize`:@@proj.android.title:Aplicación Móvil Nativa — Fundamentos Android`,
     category: 'academic',
     period: $localize`:@@proj.android.period:2022`,
-    logo: 'assets/img/logo-android.svg',
+    logo: 'assets/img/covers/arg-programa-cover.webp',
+    coverImage: 'assets/img/covers/arg-programa-cover.webp',
     cardSize: 'sm',
     shortDescription: $localize`:@@proj.android.short:Aplicación nativa para validación de datos y gestión de estados en entornos móviles.`,
     fullDescription: [
       $localize`:@@proj.android.full.1:Evaluación final integradora para la certificación en Desarrollo de Aplicaciones Móviles: validación y comparación lógica de cadenas de texto.`,
       $localize`:@@proj.android.full.2:Consolidación del ciclo de vida de actividades en Android, manejo de estados de interfaz, validación de datos en tiempo real y gestión eficiente de recursos.`
     ],
-    stack: [{ label: 'Android', icon: 'assets/icons/android.svg' }, { label: 'Java', icon: 'assets/icons/java.svg' }],
+    stack: [{ label: 'Android Studio', icon: 'assets/icons/androidstudio-original.svg' }, { label: 'Android', icon: 'assets/icons/android-original.svg' }, { label: 'Kotlin', icon: 'assets/icons/kotlin-original.svg' }],
     links: [{ label: $localize`:@@proj.android.link.repo:Ver código`, url: 'https://github.com/nachoalgz/ArgProgAndroidProyectoFinal', external: true }]
   }
 ];

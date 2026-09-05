@@ -1,0 +1,39 @@
+<div
+  *ngIf="layout.mobileMenuOpen()"
+  (click)="layout.closeMobileMenu()"
+  class="fixed inset-0 bg-black/40 z-40 lg:hidden">
+</div>
+
+<aside
+  class="fixed inset-y-0 left-0 z-50 w-72 sm:w-80 lg:w-96
+         border-r border-stone-200 bg-stone-100 px-8 py-10 overflow-y-auto
+         transition-transform duration-300 ease-in-out lg:translate-x-0"
+  [class.-translate-x-full]="!layout.mobileMenuOpen()">
+
+  <img [src]="profile.photo" alt="" class="w-28 h-28 rounded-full object-cover shadow-md mb-6">
+
+  <h1 class="text-2xl font-bold text-stone-900 leading-tight">{{ profile.fullName }}</h1>
+  <p class="text-sm text-stone-500 mt-1">{{ profile.role }}</p>
+  <p class="text-sm text-stone-600 mt-4 leading-relaxed">{{ profile.shortBio }}</p>
+
+  <a [href]="profile.cvUrl" download
+     class="mt-6 inline-flex items-center justify-center rounded-md bg-amber-600 text-white
+            text-sm font-medium px-4 py-2 hover:bg-amber-700 transition-colors" i18n="@@nav.downloadCv">
+    Descargar CV
+  </a>
+
+  <nav class="mt-10 flex flex-col gap-3">
+    <a *ngFor="let item of navItems" [href]="'#' + item.fragment"
+       (click)="layout.closeMobileMenu()"
+       class="text-sm font-medium text-stone-600 hover:text-amber-700 transition-colors">
+      {{ item.label }}
+    </a>
+  </nav>
+
+  <div class="mt-auto pt-10 flex gap-4">
+    <a *ngFor="let social of profile.socials" [href]="social.url" target="_blank" rel="noopener"
+       class="text-stone-400 hover:text-amber-600 transition-colors">
+      <img [src]="social.icon" [alt]="social.label" class="w-5 h-5">
+    </a>
+  </div>
+</aside>

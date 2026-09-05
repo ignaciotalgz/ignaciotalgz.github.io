@@ -8,8 +8,8 @@ export const PROFILE: Profile = {
   cvUrl: 'assets/files/CV-AlvarezGonzalezIgnacioTomas.pdf',
   email: 'ignaciotalgz@gmail.com',
   socials: [
-    { label: 'GitHub', url: 'https://github.com/ignaciotalgz', icon: 'assets/icons/github.svg' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ignaciotalgz/', icon: 'assets/icons/linkedin.svg' },
-    { label: 'Email', url: 'mailto:ignaciotalgz@gmail.com', icon: 'assets/icons/mail.svg' }
+    { label: 'GitHub', url: 'https://github.com/ignaciotalgz', icon: 'assets/icons/github-original.svg' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/ignaciotalgz/', icon: 'assets/icons/linkedin-original.svg' },
+    { label: 'Email', url: 'mailto:ignaciotalgz@gmail.com', icon: 'assets/icons/gmail.svg' }
   ]
 };

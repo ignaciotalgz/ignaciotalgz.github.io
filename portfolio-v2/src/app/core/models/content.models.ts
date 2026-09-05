@@ -2,13 +2,13 @@ export type CardSize = 'lg' | 'md' | 'sm';
 
 export interface TechTag {
   label: string;
-  icon?: string; // ruta relativa dentro de assets/icons/
+  icon?: string;
 }
 
 export interface LinkRef {
   label: string;
   url: string;
-  external?: boolean; // true = target="_blank"
+  external?: boolean;
 }
 
 export interface SocialLink {
@@ -28,13 +28,14 @@ export interface Profile {
 }
 
 export interface Experience {
-  id: string; // slug: 'griba-sas', usado en /experiencia/:id
+  id: string;
   title: string;
   organization: string;
   period: string;
   logo: string;
+  coverImage: string; // captura/gráfico grande para el frente de la tarjeta
   shortDescription: string;
-  fullDescription: string[]; // un string por párrafo
+  fullDescription: string[];
   stack: TechTag[];
   cardSize: CardSize;
   links?: LinkRef[];
@@ -42,15 +43,26 @@ export interface Experience {
 }
 
 export interface Project {
-  id: string; // slug: 'boeris-creaciones', usado en /proyecto/:id
+  id: string;
   title: string;
   category: 'production' | 'personal' | 'academic';
   period: string;
   logo: string;
+  coverImage: string;
   shortDescription: string;
   fullDescription: string[];
   stack: TechTag[];
   cardSize: CardSize;
   links?: LinkRef[];
-  featured?: boolean; // usado para destacar visualmente en el bento
+  featured?: boolean;
+}
+
+// Forma normalizada que consume el modal, sin importar si viene de Experience o Project
+export interface DetailContent {
+  title: string;
+  subtitle: string;
+  logo: string;
+  fullDescription: string[];
+  stack: TechTag[];
+  links?: LinkRef[];
 }

@@ -1,0 +1,43 @@
+<div *ngIf="content"
+     class="fixed inset-0 z-[60] flex items-center justify-center p-4"
+     (click)="close()">
+
+  <div class="absolute inset-0 bg-black/50"></div>
+
+  <div class="relative bg-stone-50 rounded-xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-8"
+       (click)="$event.stopPropagation()">
+
+    <button (click)="close()"
+            class="absolute top-4 right-4 text-stone-400 hover:text-amber-600"
+            aria-label="Cerrar" i18n-aria-label="@@modal.close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <img [src]="content.logo" [alt]="content.title" class="h-10 w-auto mb-4">
+    <h3 class="text-xl font-bold text-stone-900">{{ content.title }}</h3>
+    <p class="text-sm text-stone-500 mb-4">{{ content.subtitle }}</p>
+
+    <p *ngFor="let paragraph of content.fullDescription" class="text-sm text-stone-700 mb-3 leading-relaxed">
+      {{ paragraph }}
+    </p>
+
+    <div class="flex flex-wrap gap-2 mt-4 mb-6">
+      <span *ngFor="let tag of content.stack"
+            class="inline-flex items-center gap-1.5 text-xs px-2 py-1 rounded bg-stone-200 text-stone-700">
+        <img *ngIf="tag.icon" [src]="tag.icon" [alt]="tag.label" class="w-3.5 h-3.5">
+        {{ tag.label }}
+      </span>
+    </div>
+
+    <div *ngIf="content.links?.length" class="flex flex-wrap gap-3">
+      <a *ngFor="let link of content.links" [href]="link.url"
+         [target]="link.external ? '_blank' : '_self'" [rel]="link.external ? 'noopener' : null"
+         class="inline-flex items-center rounded-md bg-amber-600 text-white text-sm font-medium
+                px-4 py-2 hover:bg-amber-700 transition-colors">
+        {{ link.label }}
+      </a>
+    </div>
+  </div>
+</div>

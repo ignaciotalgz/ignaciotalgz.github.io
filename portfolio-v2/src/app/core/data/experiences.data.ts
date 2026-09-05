@@ -6,7 +6,8 @@ export const EXPERIENCES: Experience[] = [
     title: $localize`:@@exp.griba.title:Desarrollador Full Stack`,
     organization: 'GRIBA SAS',
     period: $localize`:@@exp.griba.period:Dic 2024 — Actualidad`,
-    logo: 'assets/img/logo-griba.svg',
+    logo: 'assets/icons/griba.svg',
+    coverImage: 'assets/img/covers/griba-cover.webp',
     current: true,
     cardSize: 'lg',
     shortDescription: $localize`:@@exp.griba.short:Desarrollo backend en .NET 6 y migración progresiva de un ERP corporativo desde escritorio a Blazor.`,
@@ -18,11 +19,11 @@ export const EXPERIENCES: Experience[] = [
       $localize`:@@exp.griba.full.5:Integración del ERP con servicios de terceros: diseño y consumo de APIs REST de alta disponibilidad (ARCA, Mercado Libre, Evolution API).`
     ],
     stack: [
-      { label: '.NET 6', icon: 'assets/icons/netcore.svg' },
-      { label: 'C#', icon: 'assets/icons/csharp.png' },
-      { label: 'Blazor', icon: 'assets/icons/blazor.png' },
-      { label: 'SQL Server', icon: 'assets/icons/sql-server.png' },
-      { label: 'DevExpress', icon: 'assets/icons/devexpress.png' }
+      { label: '.NET 6', icon: 'assets/icons/dotnetcore-original.svg' },
+      { label: 'C#', icon: 'assets/icons/csharp-original.svg' },
+      { label: 'Blazor', icon: 'assets/icons/blazor-original.svg' },
+      { label: 'SQL Server', icon: 'assets/icons/microsoftsqlserver-original.svg' },
+      { label: 'DevExpress', icon: 'assets/icons/devexpress.svg' }
     ]
   },
   {
@@ -30,7 +31,8 @@ export const EXPERIENCES: Experience[] = [
     title: $localize`:@@exp.eattv.title:Desarrollo Web Institucional`,
     organization: 'Ente Tucumán Turismo',
     period: $localize`:@@exp.eattv.period:Abril 2021`,
-    logo: 'assets/img/logo-eattv.svg',
+    logo: 'assets/img/entetucumanturismo.png',
+    coverImage: 'assets/img/covers/web-eatt-cover.webp',
     cardSize: 'md',
     shortDescription: $localize`:@@exp.eattv.short:Web institucional dinámica con sistema CRUD interno para gestión de contenido y control de accesos por roles.`,
     fullDescription: [
@@ -39,9 +41,13 @@ export const EXPERIENCES: Experience[] = [
       $localize`:@@exp.eattv.full.3:Frontend con Bootstrap y jQuery, backend en PHP nativo, arquitectura cliente-servidor bajo el patrón MVC.`
     ],
     stack: [
-      { label: 'PHP', icon: 'assets/icons/php.svg' },
-      { label: 'MySQL', icon: 'assets/icons/mysql.svg' },
-      { label: 'JavaScript', icon: 'assets/icons/javascript.svg' }
+      { label: 'PHP', icon: 'assets/icons/php-original.svg' },
+      { label: 'MySQL', icon: 'assets/icons/mysql-original.svg' },
+      { label: 'JavaScript', icon: 'assets/icons/javascript-original.svg' },
+      { label: 'JQuery', icon: 'assets/icons/jquery-original.svg' },
+      { label: 'HTML', icon: 'assets/icons/html5-original.svg' },
+      { label: 'CSS', icon: 'assets/icons/javascript-original.svg' },
+      { label: 'Bootstrap', icon: 'assets/icons/bootstrap-original.svg' }
     ]
   }
 ];
