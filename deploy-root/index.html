@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+  var lang = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+  var target = lang.startsWith('en') ? '/en/' : '/es-AR/';
+  window.location.replace(target + window.location.search + window.location.hash);
+</script>
+<meta http-equiv="refresh" content="0; url=/es-AR/">
+</head>
+<body>
+  <p>Redirigiendo… / Redirecting…
+    <a href="/es-AR/">Continuar en Español</a> ·
+    <a href="/en/">Continue in English</a>
+  </p>
+</body>
+</html>

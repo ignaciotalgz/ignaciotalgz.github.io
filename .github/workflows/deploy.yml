@@ -1,0 +1,64 @@
+name: Deploy portfolio to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'portfolio-v2/**'
+      - 'jobs/**'
+      - 'deploy-root/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: portfolio-v2/package-lock.json
+
+      - name: Instalar dependencias
+        working-directory: portfolio-v2
+        run: npm ci
+
+      - name: Build (ambos idiomas)
+        working-directory: portfolio-v2
+        run: npm run build
+
+      - name: Ensamblar sitio final
+        run: |
+          mkdir -p deploy
+          cp -r portfolio-v2/dist/portfolio-v2/browser/es-AR deploy/es-AR
+          cp -r portfolio-v2/dist/portfolio-v2/browser/en deploy/en
+          cp -r portfolio-v2/public/notebooks deploy/notebooks
+          cp -r portfolio-v2/public/analizador-vocales deploy/analizador-vocales
+          cp -r jobs deploy/jobs
+          cp deploy-root/index.html deploy/index.html
+          touch deploy/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: deploy
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
