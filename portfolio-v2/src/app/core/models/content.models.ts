@@ -22,6 +22,8 @@ export interface Profile {
   role: string;
   photo: string;
   shortBio: string;
+  aboutShort: string;
+  aboutFull: string[];
   cvUrl: string;
   email: string;
   socials: SocialLink[];
@@ -33,7 +35,7 @@ export interface Experience {
   organization: string;
   period: string;
   logo: string;
-  coverImage: string; // captura/gráfico grande para el frente de la tarjeta
+  coverImage: string;
   shortDescription: string;
   fullDescription: string[];
   stack: TechTag[];
@@ -55,9 +57,9 @@ export interface Project {
   cardSize: CardSize;
   links?: LinkRef[];
   featured?: boolean;
+  comingSoon?: boolean;
 }
 
-// Forma normalizada que consume el modal, sin importar si viene de Experience o Project
 export interface DetailContent {
   title: string;
   subtitle: string;

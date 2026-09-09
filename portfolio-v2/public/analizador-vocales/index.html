@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analizador de Vocales — Demo interactiva</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --border: #e7e5e4;
+    --text: #1c1917;
+    --text-muted: #78716c;
+    --accent: #d97706;
+    --accent-hover: #b45309;
+    --accent-soft: #fffbeb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface);
+  }
+
+  header img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+}
+
+  header a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  header a:hover { color: var(--accent); }
+  header h1 { font-size: 1rem; margin: 0; font-weight: 600; }
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  .intro { margin-bottom: 2rem; }
+  .intro p { color: var(--text-muted); font-size: 0.95rem; }
+  .intro ul { color: var(--text-muted); font-size: 0.9rem; padding-left: 1.25rem; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  button, .upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  button:hover, .upload-btn:hover { background: var(--accent-hover); }
+  button:disabled { opacity: 0.5; cursor: default; }
+  .upload-btn {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .upload-btn:hover { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-hover); }
+  input[type="file"] { display: none; }
+  #status {
+    margin: 0.75rem 0 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    min-height: 1.2em;
+  }
+  #status.error { color: #b91c1c; }
+  #resultsSection { display: none; }
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .result-item {
+    background: var(--accent-soft);
+    border-radius: 0.5rem;
+    padding: 0.9rem 1rem;
+  }
+  .result-item .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
+  .result-item .value { font-size: 1.4rem; font-weight: 700; color: var(--accent-hover); margin-top: 0.15rem; }
+  .result-item .sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.15rem; }
+  canvas { width: 100%; display: block; border-radius: 0.5rem; background: #1c1917; }
+  .canvas-label { font-size: 0.75rem; color: var(--text-muted); margin: 0.4rem 0 0.5rem; font-weight: 500; }
+  #envelopeCanvas { background: var(--surface); border: 1px solid var(--border); }
+  footer { text-align: center; padding: 2rem 1.5rem; color: var(--text-muted); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="/assets/icons/AlGz.svg" alt="Logo">
+  <h1>Analizador de Vocales</h1>
+  <a href="/">← Volver al portfolio</a>
+</header>
+
+<main>
+  <div class="intro">
+    <p>Grabá una vocal sostenida (por ejemplo "aaaaa" durante 2 segundos) o subí un archivo de audio corto. El análisis corre completo en tu navegador: se extrae el espectrograma, se calculan los formantes F1 y F2, y se clasifica la vocal y el género comparando contra una tabla de referencia — el mismo método usado en el notebook original.</p>
+    <ul>
+      <li>Pre-énfasis (α = 0.97) + espectrograma (STFT, ventana Hamming, 512 muestras, 50% solape)</li>
+      <li>Envolvente espectral por suavizado gaussiano (σ = 2.5)</li>
+      <li>Detección de F1 (200–825 Hz) y F2 (800–2800 Hz) por máximo local</li>
+      <li>Clasificación por distancia euclídea contra 10 puntos de referencia (5 vocales × 2 géneros)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="controls">
+      <button id="recordBtn" type="button">🎙️ Grabar 2s</button>
+      <span style="color: var(--text-muted); font-size: 0.85rem;">o</span>
+      <label class="upload-btn">
+        📁 Subir audio
+        <input type="file" id="fileInput" accept="audio/*">
+      </label>
+    </div>
+    <p id="status"></p>
+  </div>
+
+  <section id="resultsSection" class="card">
+    <p class="canvas-label">Espectrograma (0–4000 Hz)</p>
+    <canvas id="spectrogramCanvas" width="700" height="220"></canvas>
+
+    <p class="canvas-label" style="margin-top: 1.25rem;">Envolvente espectral y formantes detectados</p>
+    <canvas id="envelopeCanvas" width="700" height="180"></canvas>
+
+    <div class="result-grid">
+      <div class="result-item">
+        <div class="label">Vocal detectada</div>
+        <div class="value" id="vocalResult">—</div>
+      </div>
+      <div class="result-item">
+        <div class="label">Género estimado</div>
+        <div class="value" id="generoResult">—</div>
+      </div>
+      <div class="result-item">
+        <div class="label">F1 / F2</div>
+        <div class="value" id="formantesResult">—</div>
+      </div>
+      <div class="result-item">
+        <div class="label">Distancia euclídea</div>
+        <div class="value" id="distResult">—</div>
+        <div class="sub">vs. valor de referencia más cercano</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  Analizador de Vocales — demo interactiva del proyecto académico de Procesamiento de Señales.
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---------- Tabla de referencia (idéntica a FORMANTES_VOCALES del notebook) ----------
+  const FORMANTES_VOCALES = {
+    A: { F: { F1: 764, F2: 1322 }, M: { F1: 743, F2: 1341 } },
+    E: { F: { F1: 526, F2: 2002 }, M: { F1: 492, F2: 2067 } },
+    I: { F: { F1: 301, F2: 2338 }, M: { F1: 286, F2: 2346 } },
+    O: { F: { F1: 505, F2: 986 },  M: { F1: 482, F2: 964 } },
+    U: { F: { F1: 309, F2: 1047 }, M: { F1: 299, F2: 998 } }
+  };
+
+  const NPERSEG = 512;
+  const HOP = 256; // 50% de solape
+
+  // ---------- FFT radix-2 iterativa (in-place, re/im separados) ----------
+  function fft(re, im) {
+    const n = re.length;
+    for (let i = 1, j = 0; i < n; i++) {
+      let bit = n >> 1;
+      for (; j & bit; bit >>= 1) j ^= bit;
+      j ^= bit;
+      if (i < j) {
+        let t = re[i]; re[i] = re[j]; re[j] = t;
+        t = im[i]; im[i] = im[j]; im[j] = t;
+      }
+    }
+    for (let len = 2; len <= n; len <<= 1) {
+      const ang = (-2 * Math.PI) / len;
+      const wr0 = Math.cos(ang), wi0 = Math.sin(ang);
+      for (let i = 0; i < n; i += len) {
+        let curWr = 1, curWi = 0;
+        const half = len >> 1;
+        for (let k = 0; k < half; k++) {
+          const a = i + k, b = i + k + half;
+          const uRe = re[a], uIm = im[a];
+          const vRe = re[b] * curWr - im[b] * curWi;
+          const vIm = re[b] * curWi + im[b] * curWr;
+          re[a] = uRe + vRe; im[a] = uIm + vIm;
+          re[b] = uRe - vRe; im[b] = uIm - vIm;
+          const nWr = curWr * wr0 - curWi * wi0;
+          const nWi = curWr * wi0 + curWi * wr0;
+          curWr = nWr; curWi = nWi;
+        }
+      }
+    }
+  }
+
+  function hammingWindow(N) {
+    const w = new Float64Array(N);
+    for (let n = 0; n < N; n++) {
+      w[n] = 0.54 - 0.46 * Math.cos((2 * Math.PI * n) / (N - 1));
+    }
+    return w;
+  }
+
+  function preEmphasis(x, alpha) {
+    const y = new Float64Array(x.length);
+    y[0] = x[0];
+    for (let i = 1; i < x.length; i++) y[i] = x[i] - alpha * x[i - 1];
+    return y;
+  }
+
+  // Recorta silencio al inicio/final en base a un umbral relativo al pico
+  function trimSilence(x, thresholdRatio) {
+    let maxAbs = 0;
+    for (let i = 0; i < x.length; i++) {
+      const a = Math.abs(x[i]);
+      if (a > maxAbs) maxAbs = a;
+    }
+    const threshold = maxAbs * thresholdRatio;
+    let start = 0, end = x.length - 1;
+    while (start < x.length && Math.abs(x[start]) < threshold) start++;
+    while (end > start && Math.abs(x[end]) < threshold) end--;
+    if (end - start < NPERSEG) return x; // si quedó muy corto, no recortamos
+    return x.slice(start, end + 1);
+  }
+
+  function stft(x, fs, nperseg, hop) {
+    const window = hammingWindow(nperseg);
+    let signal = x;
+    if (signal.length < nperseg) {
+      const padded = new Float64Array(nperseg);
+      padded.set(signal);
+      signal = padded;
+    }
+    const numFrames = Math.max(1, Math.floor((signal.length - nperseg) / hop) + 1);
+    const numBins = nperseg / 2 + 1;
+    const freqs = new Float64Array(numBins);
+    for (let k = 0; k < numBins; k++) freqs[k] = (k * fs) / nperseg;
+
+    const frames = [];
+    for (let f = 0; f < numFrames; f++) {
+      const start = f * hop;
+      const re = new Float64Array(nperseg);
+      const im = new Float64Array(nperseg);
+      for (let n = 0; n < nperseg; n++) {
+        const sample = signal[start + n] || 0;
+        re[n] = sample * window[n];
+      }
+      fft(re, im);
+      const magDb = new Float64Array(numBins);
+      for (let k = 0; k < numBins; k++) {
+        const mag = Math.sqrt(re[k] * re[k] + im[k] * im[k]);
+        magDb[k] = 20 * Math.log10(mag + 1e-8);
+      }
+      frames.push(magDb);
+    }
+    return { frames, freqs };
+  }
+
+  function meanSpectrum(frames) {
+    const numBins = frames[0].length;
+    const mean = new Float64Array(numBins);
+    for (const frame of frames) {
+      for (let k = 0; k < numBins; k++) mean[k] += frame[k];
+    }
+    for (let k = 0; k < numBins; k++) mean[k] /= frames.length;
+    return mean;
+  }
+
+  function gaussianSmooth1D(arr, sigma) {
+    const radius = Math.ceil(sigma * 3);
+    const kernel = new Float64Array(radius * 2 + 1);
+    let sum = 0;
+    for (let i = -radius; i <= radius; i++) {
+      const v = Math.exp(-(i * i) / (2 * sigma * sigma));
+      kernel[i + radius] = v;
+      sum += v;
+    }
+    for (let i = 0; i < kernel.length; i++) kernel[i] /= sum;
+
+    const out = new Float64Array(arr.length);
+    for (let i = 0; i < arr.length; i++) {
+      let acc = 0;
+      for (let k = -radius; k <= radius; k++) {
+        let idx = i + k;
+        if (idx < 0) idx = 0;
+        if (idx >= arr.length) idx = arr.length - 1;
+        acc += arr[idx] * kernel[k + radius];
+      }
+      out[i] = acc;
+    }
+    return out;
+  }
+
+  function findFormants(freqs, envelope) {
+    function maxInRange(lo, hi) {
+      let bestIdx = -1, bestVal = -Infinity;
+      for (let i = 0; i < freqs.length; i++) {
+        if (freqs[i] >= lo && freqs[i] <= hi && envelope[i] > bestVal) {
+          bestVal = envelope[i];
+          bestIdx = i;
+        }
+      }
+      return bestIdx >= 0 ? freqs[bestIdx] : null;
+    }
+    return {
+      F1: maxInRange(200, 825),
+      F2: maxInRange(800, 2800)
+    };
+  }
+
+  function nearestVowel(F1, F2) {
+    let best = null, bestDist = Infinity;
+    for (const vocal of Object.keys(FORMANTES_VOCALES)) {
+      for (const genero of ['F', 'M']) {
+        const ref = FORMANTES_VOCALES[vocal][genero];
+        const dist = Math.hypot(F1 - ref.F1, F2 - ref.F2);
+        if (dist < bestDist) {
+          bestDist = dist;
+          best = { vocal, genero };
+        }
+      }
+    }
+    return { vocal: best.vocal, genero: best.genero, dist: bestDist };
+  }
+
+  // ---------- Dibujo ----------
+  function lerpColor(t) {
+    // stone-900 -> amber-700 -> amber-200
+    const stops = [
+      [28, 25, 23],
+      [180, 83, 9],
+      [253, 230, 138]
+    ];
+    const scaled = Math.max(0, Math.min(1, t)) * (stops.length - 1);
+    const i = Math.floor(scaled);
+    const frac = scaled - i;
+    const a = stops[i], b = stops[Math.min(i + 1, stops.length - 1)];
+    const r = Math.round(a[0] + (b[0] - a[0]) * frac);
+    const g = Math.round(a[1] + (b[1] - a[1]) * frac);
+    const bl = Math.round(a[2] + (b[2] - a[2]) * frac);
+    return `rgb(${r},${g},${bl})`;
+  }
+
+  function drawSpectrogram(canvas, frames, freqs, maxFreqShow) {
+    let cutIdx = 0;
+    while (cutIdx < freqs.length && freqs[cutIdx] <= maxFreqShow) cutIdx++;
+
+    const off = document.createElement('canvas');
+    off.width = frames.length;
+    off.height = cutIdx;
+    const offCtx = off.getContext('2d');
+    const imgData = offCtx.createImageData(off.width, off.height);
+
+    let minDb = Infinity, maxDb = -Infinity;
+    for (const frame of frames) {
+      for (let k = 0; k < cutIdx; k++) {
+        if (frame[k] < minDb) minDb = frame[k];
+        if (frame[k] > maxDb) maxDb = frame[k];
+      }
+    }
+    const range = Math.max(1e-6, maxDb - minDb);
+
+    for (let x = 0; x < frames.length; x++) {
+      for (let y = 0; y < cutIdx; y++) {
+        const norm = (frames[x][y] - minDb) / range;
+        const color = lerpColor(norm);
+        const [r, g, b] = color.match(/\d+/g).map(Number);
+        // y invertido: frecuencias bajas abajo
+        const py = cutIdx - 1 - y;
+        const idx = (py * off.width + x) * 4;
+        imgData.data[idx] = r;
+        imgData.data[idx + 1] = g;
+        imgData.data[idx + 2] = b;
+        imgData.data[idx + 3] = 255;
+      }
+    }
+    offCtx.putImageData(imgData, 0, 0);
+
+    const ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(off, 0, 0, off.width, off.height, 0, 0, canvas.width, canvas.height);
+  }
+
+  function drawEnvelope(canvas, freqs, envelope, F1, F2, maxFreqShow) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    let cutIdx = 0;
+    while (cutIdx < freqs.length && freqs[cutIdx] <= maxFreqShow) cutIdx++;
+
+    let minV = Infinity, maxV = -Infinity;
+    for (let i = 0; i < cutIdx; i++) {
+      if (envelope[i] < minV) minV = envelope[i];
+      if (envelope[i] > maxV) maxV = envelope[i];
+    }
+    const range = Math.max(1e-6, maxV - minV);
+    const pad = 24;
+
+    function xForFreq(f) { return pad + (f / maxFreqShow) * (w - pad * 2); }
+    function yForVal(v) { return h - pad - ((v - minV) / range) * (h - pad * 2); }
+
+    // Curva de la envolvente
+    ctx.strokeStyle = '#78716c';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    for (let i = 0; i < cutIdx; i++) {
+      const x = xForFreq(freqs[i]);
+      const y = yForVal(envelope[i]);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    // Marcadores F1 / F2
+    function marker(freq, label, color) {
+      if (freq == null) return;
+      const x = xForFreq(freq);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(x, pad);
+      ctx.lineTo(x, h - pad);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = color;
+      ctx.font = '600 11px sans-serif';
+      ctx.fillText(`${label} · ${Math.round(freq)} Hz`, x + 4, pad + 12);
+    }
+    marker(F1, 'F1', '#d97706');
+    marker(F2, 'F2', '#b45309');
+
+    // Eje X (frecuencia) de referencia
+    ctx.fillStyle = '#a8a29e';
+    ctx.font = '10px sans-serif';
+    for (let f = 0; f <= maxFreqShow; f += 1000) {
+      ctx.fillText(`${f}`, xForFreq(f), h - 6);
+    }
+  }
+
+  // ---------- Flujo principal ----------
+  const statusEl = document.getElementById('status');
+  const resultsSection = document.getElementById('resultsSection');
+  const vocalResult = document.getElementById('vocalResult');
+  const generoResult = document.getElementById('generoResult');
+  const formantesResult = document.getElementById('formantesResult');
+  const distResult = document.getElementById('distResult');
+  const spectrogramCanvas = document.getElementById('spectrogramCanvas');
+  const envelopeCanvas = document.getElementById('envelopeCanvas');
+
+  function setStatus(msg, isError) {
+    statusEl.textContent = msg;
+    statusEl.className = isError ? 'error' : '';
+  }
+
+  async function processAudioBuffer(audioBuffer) {
+    try {
+      setStatus('Procesando audio…');
+      const fs = audioBuffer.sampleRate;
+
+      let signal;
+      if (audioBuffer.numberOfChannels > 1) {
+        const chA = audioBuffer.getChannelData(0);
+        const chB = audioBuffer.getChannelData(1);
+        signal = new Float64Array(chA.length);
+        for (let i = 0; i < chA.length; i++) signal[i] = (chA[i] + chB[i]) / 2;
+      } else {
+        signal = Float64Array.from(audioBuffer.getChannelData(0));
+      }
+
+      const trimmed = trimSilence(signal, 0.05);
+      if (trimmed.length < fs * 0.15) {
+        setStatus('El audio detectado es demasiado corto o silencioso. Grabá pronunciando una vocal sostenida (ej. "aaaa") durante al menos 1 segundo.', true);
+        return;
+      }
+
+      const emphasized = preEmphasis(trimmed, 0.97);
+      const { frames, freqs } = stft(emphasized, fs, NPERSEG, HOP);
+      const mean = meanSpectrum(frames);
+      const envelope = gaussianSmooth1D(mean, 2.5);
+      const { F1, F2 } = findFormants(freqs, envelope);
+
+      if (F1 == null || F2 == null) {
+        setStatus('No se pudieron extraer los formantes de este audio. Probá con una grabación más clara.', true);
+        return;
+      }
+
+      const { vocal, genero, dist } = nearestVowel(F1, F2);
+
+      vocalResult.textContent = vocal;
+      generoResult.textContent = genero === 'F' ? 'Femenino' : 'Masculino';
+      formantesResult.textContent = `${Math.round(F1)} / ${Math.round(F2)} Hz`;
+      distResult.textContent = `${dist.toFixed(1)} Hz`;
+
+      drawSpectrogram(spectrogramCanvas, frames, freqs, 4000);
+      drawEnvelope(envelopeCanvas, freqs, envelope, F1, F2, 3500);
+
+      resultsSection.style.display = 'block';
+      setStatus('Análisis completo.');
+    } catch (err) {
+      console.error(err);
+      setStatus('Ocurrió un error al procesar el audio: ' + err.message, true);
+    }
+  }
+
+  async function decodeArrayBuffer(arrayBuffer) {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const ctx = new AudioCtx();
+    try {
+      return await ctx.decodeAudioData(arrayBuffer);
+    } finally {
+      ctx.close();
+    }
+  }
+
+  // Grabación por micrófono
+  const recordBtn = document.getElementById('recordBtn');
+  recordBtn.addEventListener('click', async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus('Tu navegador no soporta grabación de audio. Probá subiendo un archivo.', true);
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      const chunks = [];
+      recorder.ondataavailable = (e) => chunks.push(e.data);
+      recorder.onstop = async () => {
+        stream.getTracks().forEach((t) => t.stop());
+        recordBtn.disabled = false;
+        const blob = new Blob(chunks);
+        const arrayBuffer = await blob.arrayBuffer();
+        const audioBuffer = await decodeArrayBuffer(arrayBuffer);
+        await processAudioBuffer(audioBuffer);
+      };
+      recorder.start();
+      recordBtn.disabled = true;
+      setStatus('Grabando… pronunciá una vocal sostenida (ej. "aaaa")');
+      setTimeout(() => {
+        if (recorder.state !== 'inactive') recorder.stop();
+      }, 2200);
+    } catch (err) {
+      setStatus('No se pudo acceder al micrófono: ' + err.message, true);
+    }
+  });
+
+  // Subida de archivo
+  const fileInput = document.getElementById('fileInput');
+  fileInput.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setStatus('Leyendo archivo…');
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const audioBuffer = await decodeArrayBuffer(arrayBuffer);
+      await processAudioBuffer(audioBuffer);
+    } catch (err) {
+      setStatus('No se pudo leer el archivo de audio: ' + err.message, true);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

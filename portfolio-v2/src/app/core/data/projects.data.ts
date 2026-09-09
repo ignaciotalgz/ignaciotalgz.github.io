@@ -15,7 +15,7 @@ export const PROJECTS: Project[] = [
       $localize`:@@proj.boeris.full.1:Nació como trabajo de graduación para la carrera de Ingeniería en Computación: diseño y documentación exhaustiva de un sistema web corporativo para gestión integral de stock, trazabilidad de materia prima y flujos de producción y ventas.`,
       $localize`:@@proj.boeris.full.2:Arquitectura en tres capas: presentación SPA con Angular 19 y TypeScript, capa de negocio RESTful en .NET 9 con C#, y persistencia en MySQL con transacciones ACID (InnoDB), vistas y stored procedures.`,
       $localize`:@@proj.boeris.full.3:Modelado completo bajo UML con PlantUML: diagramas de contexto, subsistemas, actividades para 68 casos de uso, modelo de datos y diagramas de despliegue en la nube (AWS EC2).`,
-      $localize`:@@proj.boeris.full.4:Hoy el sistema está desplegado en producción real: backend en Render, base de datos en Aiven for MySQL y frontend en Vercel, incluyendo automatizaciones como reseteo semanal de datos de demo vía cron job.`
+      $localize`:@@proj.boeris.full.4:Hoy el sistema cuenta con una demo pública disponible para probarlo en vivo: frontend en Vercel, backend en Render y base de datos en Aiven for MySQL.`
     ],
     stack: [
       { label: 'Angular 19', icon: 'assets/icons/angular-original.svg' },
@@ -44,7 +44,7 @@ export const PROJECTS: Project[] = [
     shortDescription: $localize`:@@proj.expoappv1.short:Primera versión de la aplicación multimedia para exposiciones, desarrollada sobre motor de videojuegos Unity.`,
     fullDescription: [
       $localize`:@@proj.expoappv1.full.1:Solución multimedia para pantallas de exposición, construida originalmente sobre el motor Unity, con navegación interactiva entre contenidos de video.`,
-      $localize`:@@proj.expoappv1.full.2:Sentó las bases funcionales que luego motivaron la reingeniería hacia una arquitectura web más liviana en la versión 2 (PWA).`
+      $localize`:@@proj.expoappv1.full.2:Es una solución multiplataforma, pensada para funcionar tanto en dispositivos de escritorio como móviles. Dejé disponible una demo web para poder probarla directamente desde el navegador.`
     ],
     stack: [
       { label: 'Unity', icon: 'assets/icons/unity-original.svg' },
@@ -60,7 +60,7 @@ export const PROJECTS: Project[] = [
     category: 'personal',
     period: $localize`:@@proj.expoapp.period:En desarrollo`,
     logo: 'assets/icons/AlGz.svg',
-    coverImage: 'assets/img/covers/expo-cover.webp',
+    coverImage: 'assets/img/covers/expov2-cover.webp',
     cardSize: 'md',
     shortDescription: $localize`:@@proj.expoapp.short:Migración de una aplicación multimedia de Unity hacia una PWA moderna y liviana.`,
     fullDescription: [
@@ -106,5 +106,30 @@ export const PROJECTS: Project[] = [
     ],
     stack: [{ label: 'Android Studio', icon: 'assets/icons/androidstudio-original.svg' }, { label: 'Android', icon: 'assets/icons/android-original.svg' }, { label: 'Kotlin', icon: 'assets/icons/kotlin-original.svg' }],
     links: [{ label: $localize`:@@proj.android.link.repo:Ver código`, url: 'https://github.com/nachoalgz/ArgProgAndroidProyectoFinal', external: true }]
+  },
+  {
+    id: 'analizador-vocales',
+    title: $localize`:@@proj.vocales.title:Analizador de Vocales`,
+    category: 'academic',
+    period: $localize`:@@proj.vocales.period:2025`,
+    logo: 'assets/img/unt.png', 
+    coverImage: 'assets/img/covers/facet-cover.webp',
+    cardSize: 'sm',
+    shortDescription: $localize`:@@proj.vocales.short:Análisis de señales de audio para detectar automáticamente qué vocal y de qué género es la persona que la pronunció.`,
+    fullDescription: [
+      $localize`:@@proj.vocales.full.1:Trabajo integrador de la materia Procesamiento de Señales, desarrollado en grupo, que aplica en conjunto los conceptos centrales de la asignatura: análisis temporal y en frecuencia, espectrogramas, filtrado y extracción de características de audio.`,
+      $localize`:@@proj.vocales.full.2:A partir de una grabación de audio, se extrae el espectrograma y se calculan los formantes F1 y F2 de cada vocal pronunciada. La clasificación se resuelve comparando esos valores contra una tabla de referencia por vocal y género, usando distancia euclídea para encontrar la coincidencia más cercana.`,
+      $localize`:@@proj.vocales.full.3:Implementado en Python con NumPy, SciPy y Matplotlib para el procesamiento de señales y la visualización de espectrogramas y espacios vocálicos.`
+    ],
+    stack: [
+      { label: 'Python', icon: 'assets/icons/python-original.svg' },
+      { label: 'NumPy', icon: 'assets/icons/numpy-original.svg' },
+      { label: 'SciPy', icon: 'assets/icons/scipy.svg' },
+      { label: 'Matplotlib', icon: 'assets/icons/matplotlib-original.svg' }
+    ],
+    links: [
+      { label: $localize`:@@proj.vocales.link.docs:Ver documentación (notebook)`, url: '/notebooks/analizador-vocales.html', external: true },
+      { label: $localize`:@@proj.vocales.link.demo:Ver demo interactiva`, url: '/analizador-vocales/', external: true }
+    ]
   }
 ];

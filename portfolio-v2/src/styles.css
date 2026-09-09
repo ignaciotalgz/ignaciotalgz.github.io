@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import 'prismjs/themes/prism-tomorrow.css';
 
 body {
   @apply bg-stone-50 text-stone-900;

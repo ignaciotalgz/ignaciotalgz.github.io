@@ -1,48 +1,62 @@
-<main class="lg:ml-80 xl:ml-96 pt-20 lg:pt-16 px-6 md:px-12 py-16 max-w-6xl">
+<main class="lg:ml-80 xl:ml-96 pt-20 lg:pt-16 px-6 md:px-12 py-16">
+  <div class="max-w-6xl 2xl:max-w-7xl mx-auto">
 
-  <section id="trabajos" class="scroll-mt-24 mb-24">
-    <h2 class="text-xl font-semibold text-stone-900 mb-6" i18n="@@section.experience">Experiencia laboral</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(140px,auto)] grid-flow-dense gap-4">
-      <article *ngFor="let exp of experiences" [ngClass]="sizeClass(exp.cardSize)" (click)="openExperience(exp)" class="rounded-xl border border-stone-200 flex flex-col cursor-pointer
-                      hover:shadow-md transition-shadow bg-white">
-        <div [ngClass]="exp.current ? 'aspect-[2/1]' : 'aspect-video'"
-          class="w-full overflow-hidden rounded-t-xl bg-stone-100 flex-shrink-0">
-          <img [src]="exp.coverImage" [alt]="exp.title" class="w-full h-full object-cover object-top">
-        </div>        
-        <div class="p-4">
-          <h3 class="font-semibold text-stone-900">{{ exp.title }}</h3>
-          <p class="text-xs text-stone-500 mb-2">{{ exp.organization }} · {{ exp.period }}</p>
-          <p class="text-sm text-stone-600 line-clamp-3">{{ exp.shortDescription }}</p>
-        </div>
-      </article>
-    </div>
-  </section>
+    <section id="sobre-mi" class="scroll-mt-24 mb-24">
+      <app-about></app-about>
+    </section>
 
-  <section id="proyectos" class="scroll-mt-24 mb-24">
-    <h2 class="text-xl font-semibold text-stone-900 mb-6" i18n="@@section.projects">Proyectos</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(140px,auto)] grid-flow-dense gap-4">
-      <article *ngFor="let proj of projects" [ngClass]="sizeClass(proj.cardSize)" (click)="openProject(proj)"
-        [class.ring-2]="proj.featured" [class.ring-amber-500]="proj.featured" class="rounded-xl border border-stone-200 flex flex-col cursor-pointer
-                      hover:shadow-md transition-shadow bg-white">
-        <div [ngClass]="proj.featured ? 'aspect-[2/1]' : 'aspect-video'"
-          class="w-full overflow-hidden rounded-t-xl bg-stone-100 flex-shrink-0">
-          <img [src]="proj.coverImage" [alt]="proj.title" class="w-full h-full object-cover object-top">
-        </div>
-        <div class="p-4 flex flex-col flex-1 justify-between">
-          <div>
-            <h3 class="font-semibold text-stone-900">{{ proj.title }}</h3>
-            <p class="text-xs text-stone-500 mb-2">{{ proj.period }}</p>
-            <p class="text-sm text-stone-600 line-clamp-3">{{ proj.shortDescription }}</p>
+    <section id="trabajos" class="scroll-mt-24 mb-24">
+      <h2 class="text-xl font-semibold text-stone-900 mb-6" i18n="@@section.experience">Experiencia laboral</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(140px,auto)] grid-flow-dense gap-4">
+        <article *ngFor="let exp of experiences" [ngClass]="sizeClass(exp.cardSize)"
+                 (click)="openExperience(exp)"
+                 class="rounded-xl border border-stone-200 flex flex-col cursor-pointer
+                        hover:shadow-md transition-shadow bg-white">
+          <div class="aspect-video w-full overflow-hidden rounded-t-xl bg-stone-100 flex-shrink-0">
+            <img [src]="exp.coverImage" [alt]="exp.organization" class="w-full h-full object-cover object-top">
           </div>
-          <div class="flex flex-wrap gap-2 mt-3" *ngIf="proj.links?.length">
-            <span *ngFor="let link of proj.links" class="text-xs px-2 py-1 rounded bg-amber-50 text-amber-700">{{
-              link.label }}</span>
+          <div class="p-4">
+            <h3 class="font-semibold text-stone-900">{{ exp.title }}</h3>
+            <p class="text-xs text-stone-500 mb-2">{{ exp.organization }} · {{ exp.period }}</p>
+            <p class="text-sm text-stone-600 line-clamp-3">{{ exp.shortDescription }}</p>
           </div>
-        </div>
-      </article>
-    </div>
-  </section>
+        </article>
+      </div>
+    </section>
+
+    <section id="proyectos" class="scroll-mt-24 mb-24">
+      <h2 class="text-xl font-semibold text-stone-900 mb-6" i18n="@@section.projects">Proyectos</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(140px,auto)] grid-flow-dense gap-4">
+        <article *ngFor="let proj of projects" [ngClass]="sizeClass(proj.cardSize)"
+                 (click)="openProject(proj)"
+                 [class.ring-2]="proj.featured" [class.ring-amber-500]="proj.featured"
+                 class="rounded-xl border border-stone-200 flex flex-col cursor-pointer
+                        hover:shadow-md transition-shadow bg-white">
+          <div [ngClass]="proj.featured ? 'aspect-[2/1]' : 'aspect-video'"
+               class="w-full overflow-hidden rounded-t-xl bg-stone-100 flex-shrink-0">
+            <img [src]="proj.coverImage" [alt]="proj.title" class="w-full h-full object-cover object-top">
+          </div>
+          <div class="p-4 flex flex-col flex-1 justify-between">
+            <div>
+              <h3 class="font-semibold text-stone-900">{{ proj.title }}</h3>
+              <p class="text-xs text-stone-500 mb-2">{{ proj.period }}</p>
+              <p class="text-sm text-stone-600 line-clamp-3">{{ proj.shortDescription }}</p>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-3" *ngIf="proj.links?.length">
+              <span *ngFor="let link of proj.links"
+                    class="text-xs px-2 py-1 rounded bg-amber-50 text-amber-700">{{ link.label }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="contacto" class="scroll-mt-24 mb-24">
+      <h2 class="text-xl font-semibold text-stone-900 mb-6" i18n="@@section.contact">Contacto</h2>
+      <app-contact></app-contact>
+    </section>
+
+  </div>
 
   <app-detail-modal [content]="selected()" (closed)="closeModal()"></app-detail-modal>
-
 </main>

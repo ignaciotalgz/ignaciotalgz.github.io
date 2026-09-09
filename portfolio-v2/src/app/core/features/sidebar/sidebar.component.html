@@ -5,7 +5,7 @@
 </div>
 
 <aside
-  class="fixed inset-y-0 left-0 z-50 w-72 sm:w-80 lg:w-96
+  class="fixed inset-y-0 left-0 z-50 w-72 sm:w-80 xl:w-96
          border-r border-stone-200 bg-stone-100 px-8 py-10 overflow-y-auto
          transition-transform duration-300 ease-in-out lg:translate-x-0"
   [class.-translate-x-full]="!layout.mobileMenuOpen()">
@@ -36,4 +36,25 @@
       <img [src]="social.icon" [alt]="social.label" class="w-5 h-5">
     </a>
   </div>
+
+  <a [href]="alternateLocaleLink" [attr.aria-label]="alternateLocaleLabel"
+     class="mt-4 inline-block w-8 h-6 rounded overflow-hidden border border-stone-300
+            hover:border-amber-500 transition-colors">
+    <svg *ngIf="locale === 'en'" viewBox="0 0 24 16" class="w-full h-full">
+      <rect width="24" height="16" fill="#ffffff"/>
+      <rect width="24" height="5.33" fill="#74ACDF"/>
+      <rect y="10.67" width="24" height="5.33" fill="#74ACDF"/>
+      <circle cx="12" cy="8" r="1.8" fill="#F6B40E" stroke="#85340A" stroke-width="0.3"/>
+    </svg>
+    <svg *ngIf="locale !== 'en'" viewBox="0 0 24 16" class="w-full h-full">
+      <rect width="24" height="16" fill="#B22234"/>
+      <rect y="1.23" width="24" height="1.23" fill="#ffffff"/>
+      <rect y="3.69" width="24" height="1.23" fill="#ffffff"/>
+      <rect y="6.15" width="24" height="1.23" fill="#ffffff"/>
+      <rect y="8.62" width="24" height="1.23" fill="#ffffff"/>
+      <rect y="11.08" width="24" height="1.23" fill="#ffffff"/>
+      <rect y="13.54" width="24" height="1.23" fill="#ffffff"/>
+      <rect width="9.6" height="8.62" fill="#3C3B6E"/>
+    </svg>
+  </a>
 </aside>

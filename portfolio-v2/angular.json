@@ -64,6 +64,18 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "en": {
+              "localize": ["en"],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "es-AR": {
+              "localize": ["es-AR"],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -80,6 +92,12 @@
             },
             "development": {
               "buildTarget": "portfolio-v2:build:development"
+            },
+            "en": {
+              "buildTarget": "portfolio-v2:build:en"
+            },
+            "es-AR": {
+              "buildTarget": "portfolio-v2:build:es-AR"
             }
           },
           "defaultConfiguration": "development"

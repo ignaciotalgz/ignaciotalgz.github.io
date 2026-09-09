@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, LOCALE_ID } from '@angular/core';
 import { PROFILE } from '../../data/profile.data';
 import { LayoutService } from '../../services/layout.service';
 
@@ -11,6 +11,7 @@ import { LayoutService } from '../../services/layout.service';
 })
 export class SidebarComponent {
   layout = inject(LayoutService);
+  locale = inject(LOCALE_ID);
   profile = PROFILE;
   navItems = [
     { label: $localize`:@@nav.about:Sobre mí`, fragment: 'sobre-mi' },
@@ -18,4 +19,12 @@ export class SidebarComponent {
     { label: $localize`:@@nav.projects:Proyectos`, fragment: 'proyectos' },
     { label: $localize`:@@nav.contact:Contacto`, fragment: 'contacto' }
   ];
+
+  get alternateLocaleLink(): string {
+  return this.locale === 'en' ? '/es-AR/' : '/en/';
+}
+
+  get alternateLocaleLabel(): string {
+    return this.locale === 'en' ? 'Español' : 'English';
+  }
 }

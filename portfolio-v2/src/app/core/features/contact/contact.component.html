@@ -1,0 +1,80 @@
+<div class="max-w-lg">
+  <form #contactForm="ngForm" (ngSubmit)="submit(contactForm)" novalidate class="flex flex-col gap-4">
+
+    <div>
+      <label for="e-mail" class="block text-sm font-medium text-stone-700 mb-1" i18n="@@contact.form.email">Email</label>
+      <input type="email" id="e-mail" name="e-mail" [(ngModel)]="email" required email
+             #emailField="ngModel"
+             [class.border-rose-400]="emailField.invalid && (emailField.touched || submitted())"
+             [class.border-stone-300]="!(emailField.invalid && (emailField.touched || submitted()))"
+             class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+      <p *ngIf="emailField.invalid && (emailField.touched || submitted())" class="text-xs text-rose-600 mt-1">
+        <span *ngIf="emailField.errors?.['required']" i18n="@@contact.form.error.emailRequired">Ingresá tu email.</span>
+        <span *ngIf="emailField.errors?.['email']" i18n="@@contact.form.error.emailInvalid">Ingresá un email válido.</span>
+      </p>
+    </div>
+
+    <div>
+      <label for="asunto" class="block text-sm font-medium text-stone-700 mb-1" i18n="@@contact.form.subject">Asunto</label>
+      <input type="text" id="asunto" name="asunto" [(ngModel)]="asunto" required
+             #asuntoField="ngModel"
+             [class.border-rose-400]="asuntoField.invalid && (asuntoField.touched || submitted())"
+             [class.border-stone-300]="!(asuntoField.invalid && (asuntoField.touched || submitted()))"
+             class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+      <p *ngIf="asuntoField.invalid && (asuntoField.touched || submitted())" class="text-xs text-rose-600 mt-1" i18n="@@contact.form.error.subjectRequired">
+        Ingresá un asunto.
+      </p>
+    </div>
+
+    <div>
+      <label for="mensaje" class="block text-sm font-medium text-stone-700 mb-1" i18n="@@contact.form.message">Mensaje</label>
+      <textarea id="mensaje" name="mensaje" rows="5" [(ngModel)]="mensaje" required
+                #mensajeField="ngModel"
+                [class.border-rose-400]="mensajeField.invalid && (mensajeField.touched || submitted())"
+                [class.border-stone-300]="!(mensajeField.invalid && (mensajeField.touched || submitted()))"
+                class="w-full rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+      <p *ngIf="mensajeField.invalid && (mensajeField.touched || submitted())" class="text-xs text-rose-600 mt-1" i18n="@@contact.form.error.messageRequired">
+        Escribí tu mensaje.
+      </p>
+    </div>
+
+    <button type="submit" [disabled]="state() === 'sending'"
+            class="inline-flex items-center justify-center rounded-md bg-amber-600 text-white
+                   text-sm font-medium px-4 py-2 hover:bg-amber-700 transition-colors disabled:opacity-50">
+      <span *ngIf="state() !== 'sending'" i18n="@@contact.form.submit">Enviar</span>
+      <span *ngIf="state() === 'sending'" i18n="@@contact.form.sending">Enviando...</span>
+    </button>
+  </form>
+</div>
+
+<div *ngIf="state() === 'success' || state() === 'error'"
+     class="fixed bottom-6 right-6 z-50 max-w-sm border rounded-lg shadow-lg p-4 flex items-start gap-3"
+     [class.bg-emerald-50]="state() === 'success'"
+     [class.border-emerald-200]="state() === 'success'"
+     [class.text-emerald-800]="state() === 'success'"
+     [class.bg-rose-50]="state() === 'error'"
+     [class.border-rose-200]="state() === 'error'"
+     [class.text-rose-800]="state() === 'error'">
+
+  <svg *ngIf="state() === 'success'" width="20" height="20" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" class="flex-shrink-0 mt-0.5">
+    <path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <svg *ngIf="state() === 'error'" width="20" height="20" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" class="flex-shrink-0 mt-0.5">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M12 8v4M12 16h.01" stroke-linecap="round"/>
+  </svg>
+
+  <p class="text-sm flex-1">
+    <span *ngIf="state() === 'success'" i18n="@@contact.form.success">¡Gracias por tu mensaje! Te voy a responder a la brevedad.</span>
+    <span *ngIf="state() === 'error'" i18n="@@contact.form.error">Hubo un error al enviar el mensaje. Probá de nuevo o escribime directo a ignaciotalgz&#64;gmail.com.</span>
+  </p>
+
+  <button (click)="closeToast()" class="flex-shrink-0 text-current opacity-60 hover:opacity-100"
+          aria-label="Cerrar" i18n-aria-label="@@modal.close">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/>
+    </svg>
+  </button>
+</div>

@@ -4,6 +4,8 @@ import { EXPERIENCES } from '../../data/experiences.data';
 import { PROJECTS } from '../../data/projects.data';
 import { CardSize, DetailContent, Experience, Project } from '../../models/content.models';
 import { DetailModalComponent } from '../detail-modal/detail-modal.component';
+import { AboutComponent } from '../about/about.component';
+import { ContactComponent } from '../contact/contact.component';
 
 const SIZE_CLASSES: Record<CardSize, string> = {
   lg: 'sm:col-span-2 sm:self-start',
@@ -13,7 +15,7 @@ const SIZE_CLASSES: Record<CardSize, string> = {
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, DetailModalComponent],
+  imports: [CommonModule, DetailModalComponent, AboutComponent, ContactComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -38,6 +40,7 @@ export class HomeComponent {
   }
 
   openProject(proj: Project): void {
+    if (proj.comingSoon) return;
     this.selected.set({
       title: proj.title,
       subtitle: proj.period,
