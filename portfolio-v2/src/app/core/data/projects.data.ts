@@ -51,7 +51,7 @@ export const PROJECTS: Project[] = [
       { label: 'C#', icon: 'assets/icons/csharp-original.svg' }
     ],
     links: [
-      { label: $localize`:@@proj.expoappv1.link.repo:Ver código`, url: 'TODO_URL_REPO_EXPOAPP_V1', external: true }
+      { label: $localize`:@@proj.expoappv1.link.repo:Ver demo`, url: '/jobs/expoWebDemo/index.html', external: true }
     ]
   },
   {
