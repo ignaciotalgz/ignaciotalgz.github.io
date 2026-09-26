@@ -11,7 +11,8 @@ export const PROFILE: Profile = {
     $localize`:@@profile.about.full.2:En la industria me especializo en traducir requerimientos de negocio en arquitecturas limpias y documentadas: diseño APIs en el backend, capas de presentación dinámicas, y optimizo el rendimiento de bases de datos relacionales mediante procedimientos almacenados y consultas complejas. También tengo experiencia integrando sistemas con servicios externos críticos —pasarelas de pago, facturación electrónica, APIs de comunicación— bajo metodologías ágiles y buenas prácticas de control de versiones.`,
     $localize`:@@profile.about.full.3:Complemento mi formación de grado con programas intensivos de la industria para mantener un stack moderno: desde ecosistemas backend corporativos como Java/Spring Boot hasta frameworks frontend flexibles como Blazor, adaptándome tanto a entornos empresariales tradicionales como a arquitecturas multiplataforma actuales.`
   ],
-  cvUrl: 'assets/files/CV-AlvarezGonzalezIgnacioTomas.pdf',
+  cvUrlEs: 'assets/files/CV-AlvarezGonzalezIgnacioTomas-ES.pdf',
+  cvUrlEn: 'assets/files/CV-AlvarezGonzalezIgnacioTomas-EN.pdf',
   email: 'ignaciotalgz@gmail.com',
   socials: [
     { label: 'GitHub', url: 'https://github.com/ignaciotalgz', icon: 'assets/icons/github-original.svg' },

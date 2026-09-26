@@ -24,7 +24,8 @@ export interface Profile {
   shortBio: string;
   aboutShort: string;
   aboutFull: string[];
-  cvUrl: string;
+  cvUrlEs: string;
+  cvUrlEn: string;
   email: string;
   socials: SocialLink[];
 }

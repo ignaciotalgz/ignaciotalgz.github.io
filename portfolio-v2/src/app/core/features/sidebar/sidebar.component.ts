@@ -27,4 +27,8 @@ export class SidebarComponent {
   get alternateLocaleLabel(): string {
     return this.locale === 'en' ? 'Español' : 'English';
   }
+
+  get cvUrl(): string {
+    return this.locale === 'en' ? this.profile.cvUrlEn : this.profile.cvUrlEs;
+  }
 }
