@@ -11,5 +11,4 @@ import { LayoutService } from './core/services/layout.service';
 })
 export class AppComponent {
   layout = inject(LayoutService);
-  title = 'portfolio-v2';
 }
