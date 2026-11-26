@@ -24,7 +24,11 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "ignore": [
+                  "notebooks/**",
+                  "analizador-vocales/**"
+                ]
               }
             ],
             "styles": [
@@ -117,7 +121,11 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "public",
+                "ignore": [
+                  "notebooks/**",
+                  "analizador-vocales/**"
+                ]
               }
             ],
             "styles": [
@@ -136,5 +144,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
