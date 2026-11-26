@@ -4,11 +4,12 @@
 // (con internet, antes de ir al stand), la app y los 6 videos queden disponibles
 // 100% offline durante el evento.
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const CACHE_NAME = `expoapp-${CACHE_VERSION}`;
 
 // Shell de la app: si falta alguno de estos archivos, la instalacion debe fallar
-// (son indispensables para que la app funcione).
+// (son indispensables para que la app funcione). No agregar aca rutas que no
+// existan en el repo: cache.addAll() es todo-o-nada y rompe el install entero.
 const APP_SHELL = [
   './',
   './index.html',
@@ -23,12 +24,6 @@ const APP_SHELL = [
   './img/settings.svg',
   './img/circle-x.svg',
   './img/device-floppy.svg',
-  './img/circle-letter-a.svg',
-  './img/circle-letter-b.svg',
-  './img/circle-letter-c.svg',
-  './img/circle-letter-d.svg',
-  './img/circle-letter-e.svg',
-  './img/circle-letter-f.svg',
   './img/volume.svg',
   './img/volume-3.svg',
   './img/x.svg',
