@@ -143,8 +143,8 @@
         <target>It's a cross-platform solution, designed to work on both desktop and mobile devices. I left a web demo available so you can try it directly from the browser.</target>
       </trans-unit>
       <trans-unit id="proj.expoappv1.link.repo" datatype="html">
-        <source>Ver código</source>
-        <target>View code</target>
+        <source>Ver demo</source>
+        <target>View demo</target>
       </trans-unit>
       <trans-unit id="proj.expoapp.title" datatype="html">
         <source>Aplicación para Exposiciones v2</source>
